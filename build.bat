@@ -10,7 +10,7 @@ REM Automates the process of compiling, linking, and generating UF2 firmware.
 REM
 REM AUTHOR: Kevin Thomas
 REM CREATION DATE: November 27, 2025
-REM UPDATE DATE: November 27, 2025
+REM UPDATE DATE: November 29, 2025
 REM ==============================================================================
 
 echo Building C version...
@@ -18,37 +18,37 @@ echo Building C version...
 REM ==============================================================================
 REM Compile C Source Files
 REM ==============================================================================
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c vector_table.c -o vector_table.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c vector_table.c -o vector_table.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c reset_handler.c -o reset_handler.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c reset_handler.c -o reset_handler.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c stack.c -o stack.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c stack.c -o stack.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c xosc.c -o xosc.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c xosc.c -o xosc.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c reset.c -o reset.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c reset.c -o reset.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c coprocessor.c -o coprocessor.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c coprocessor.c -o coprocessor.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c gpio.c -o gpio.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c gpio.c -o gpio.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c delay.c -o delay.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c delay.c -o delay.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c button.c -o button.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c button.c -o button.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c main.c -o main.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c main.c -o main.o
 if errorlevel 1 goto error
 
-arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -O2 -Wall -Wextra -ffunction-sections -fdata-sections -c image_def.c -o image_def.o
+arm-none-eabi-gcc -mcpu=cortex-m33 -mthumb -Og -g3 -Wall -Wextra -ffunction-sections -fdata-sections -c image_def.c -o image_def.o
 if errorlevel 1 goto error
 
 REM ==============================================================================
@@ -82,7 +82,7 @@ echo.
 echo To flash via UF2:
 echo   1. Hold BOOTSEL button
 echo   2. Plug in USB
-echo   3. Copy blink.uf2 to RP2350 drive
+echo   3. Copy button.uf2 to RP2350 drive
 echo.
 echo To flash via OpenOCD (debug probe):
 echo   openocd -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000" -c "program button.elf verify reset exit"
