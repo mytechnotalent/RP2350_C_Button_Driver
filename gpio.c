@@ -5,12 +5,13 @@
  * RP2350 GPIO Functions.
  * 
  * BRIEF:
- * Provides GPIO configuration, set, and clear functions using
- * coprocessor instructions.
+ * Provides GPIO configuration, set, and clear functions for any GPIO pin
+ * (0-29) using coprocessor instructions. Register addresses are calculated
+ * dynamically based on the gpio_num parameter.
  *
  * AUTHOR: Kevin Thomas
  * CREATION DATE: November 27, 2025
- * UPDATE DATE: November 27, 2025
+ * UPDATE DATE: December 19, 2025
  */
 
 #include "gpio.h"
@@ -23,8 +24,8 @@ void GPIO_Config(uint32_t gpio_num)
     uint32_t value;
     
     // GPIO_Config_Modify_Pad:
-    // Get pad register for GPIO16
-    pad_reg = &PADS_BANK0->GPIO16;
+    // Get pad register for specified GPIO (GPIO0 at offset 0x04, each pad is 4 bytes)
+    pad_reg = (volatile uint32_t *)(PADS_BANK0_BASE + 0x04U + (gpio_num * 4U));
     
     // read PAD value
     value = *pad_reg;
@@ -42,8 +43,8 @@ void GPIO_Config(uint32_t gpio_num)
     *pad_reg = value;
     
     // GPIO_Config_Modify_CTRL:
-    // Get control register for GPIO16
-    ctrl_reg = &IO_BANK0->GPIO16.CTRL;
+    // Get control register for specified GPIO (each GPIO has 8-byte struct: STATUS + CTRL)
+    ctrl_reg = (volatile uint32_t *)(IO_BANK0_BASE + (gpio_num * 8U) + 4U);
     
     // read CTRL value
     value = *ctrl_reg;
